@@ -8,6 +8,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"golang.org/x/term"
 )
 
 func main() {
@@ -62,20 +64,25 @@ func main() {
 
 	max := findMax(pairs)
 
+	terminal_width, _, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil {
+		terminal_width = 90
+	}
+
 	fmt.Printf("\nDirectory: %s \n", path)
 	fmt.Printf("%s\n", strings.Repeat("-", len(path)+13))
 	for _, pair := range pairs {
 		if _, ok := dirmap[pair.Key]; ok {
 			if len(pair.Key) > 15 {
-				fmt.Printf("\x1b[94m%-15.15s...\x1b[0m |%s| %s\n", pair.Key[:15], generateProgressBar(pair.Value, max, 80), humanReadableBytes(pair.Value))
+				fmt.Printf("\x1b[94m%-15.15s...\x1b[0m |%s| %s\n", pair.Key[:15], getRelativeSizeBar(pair.Value, max, terminal_width-30), humanReadableBytes(pair.Value))
 			} else {
-				fmt.Printf("\x1b[94m%-18.18s\x1b[0m |%s| %s\n", pair.Key, generateProgressBar(pair.Value, max, 80), humanReadableBytes(pair.Value))
+				fmt.Printf("\x1b[94m%-18.18s\x1b[0m |%s| %s\n", pair.Key, getRelativeSizeBar(pair.Value, max, terminal_width-30), humanReadableBytes(pair.Value))
 			}
 		} else {
 			if len(pair.Key) > 15 {
-				fmt.Printf("%-15.15s... |%s| %s\n", pair.Key[:15], generateProgressBar(pair.Value, max, 80), humanReadableBytes(pair.Value))
+				fmt.Printf("%-15.15s... |%s| %s\n", pair.Key[:15], getRelativeSizeBar(pair.Value, max, terminal_width-30), humanReadableBytes(pair.Value))
 			} else {
-				fmt.Printf("%-18.18s |%s| %s\n", pair.Key, generateProgressBar(pair.Value, max, 80), humanReadableBytes(pair.Value))
+				fmt.Printf("%-18.18s |%s| %s\n", pair.Key, getRelativeSizeBar(pair.Value, max, terminal_width-30), humanReadableBytes(pair.Value))
 			}
 		}
 	}
@@ -119,7 +126,7 @@ func findMax(data []Pair) int64 {
 	return max
 }
 
-func generateProgressBar(value, max int64, width int) string {
+func getRelativeSizeBar(value, max int64, width int) string {
 	percentage := float64(value) / float64(max)
 	progressBarWidth := int(percentage * float64(width))
 
