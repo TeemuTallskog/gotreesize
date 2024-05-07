@@ -18,23 +18,16 @@ Or download executable directly from releases:
 
 -----
 ## Usage
-```bash
-gotreesize.exe 'C:\Program Files\Git'
 
-Directory: C:\Program Files\Git
----------------------------------
-mingw64            |████████████████████████████████████████████████████████████████████████████████| 207.7 MB
-usr                |███████████████████████████████████████████████████████████████████████         | 185.0 MB
-unins000.exe       |█                                                                               | 3.1 MB
-etc                |                                                                                | 1.5 MB
-unins000.dat       |                                                                                | 1.2 MB
-cmd                |                                                                                | 514.4 KB
-ReleaseNotes.ht... |                                                                                | 255.2 KB
-git-bash.exe       |                                                                                | 134.0 KB
-git-cmd.exe        |                                                                                | 133.5 KB
-bin                |                                                                                | 133.0 KB
-unins000.msg       |                                                                                | 23.6 KB
-LICENSE.txt        |                                                                                | 18.3 KB
-dev                |                                                                                | 172 B
-tmp                |                                                                                | 0 B
+```Bash
+.\gotreesize.exe 'C:\Program Files\Git\mingw64'
+
+Directory: C:\Program Files\Git\mingw64
+-----------------------------------------
+bin                |█████████████████████████████████████████████████████████| 94.1 MB
+libexec            |██████████████████████████████████████████████████████   | 89.2 MB
+share              |██████████                                               | 17.3 MB
+lib                |███                                                      | 5.6 MB
+etc                |                                                         | 1.5 MB
+doc                |                                                         | 10.2 KB
 ```
